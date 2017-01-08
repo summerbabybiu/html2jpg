@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div id="content" class="content" style="background-color: #999999">
+	<img src="aaa.jpg" style="width: 120px" id="originimg">
+	<!-- <div class="iii" style="background-image: url('aaa.jpg');background-repeat: no-repeat;width: 200px;height: 200px;background-size: cover;"></div> -->
+	<p>aaaaa</p>
+</div>
+<img id="screenshot">
+<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="html2canvas.js"></script>
+<script src="hammer.min.js"></script>
+<script type="text/javascript">
+	var gesture = new Hammer(document.getElementById("content"));
+	gesture.get('press').set({time: 1000});
+	gesture.on('press', function(ev){
+		html2canvas($("#content"), {
+			allowTaint: true,
+			useCORS: true,
+			onrendered: function(canvas) {
+				var imageURL = canvas.toDataURL('image/png');
+				$("#screenshot").attr("src", imageURL);
+			}
+		})
+	});
+</script>
+</body>
+</html>
